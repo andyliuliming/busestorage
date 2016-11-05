@@ -19,14 +19,24 @@ int main(int argc, char *argv[])
     return 1;
   }
 
+  openlog("fusestorage", LOG_CONS | LOG_PID, LOG_USER);
+
   AzureStorageConfig *asConfig = new AzureStorageConfig("andliumysql1", "POi29VbeHAAHBiXyj/gy+MYdR1CuWG5kthAlQZQfm0rmk9zNiMo3lXfJqFgOW8gZC77tsiBVXIRIL9NDMLPkuQ==");
   FilePath *filePath = new FilePath();
+
+  filePath->directory = new char[strlen("abc") + 1];
+  strcpy(filePath->directory, "abc");
+
+  filePath->fileName = new char[strlen("testdisk.vhd") + 1];
+  strcpy(filePath->fileName, "testdisk.vhd");
 
   AzureStorageFS::asEnv = new AzureStorageFSEnv();
 
   AzureStorageFS::asAdapter = new AzureStorageAdapter(asConfig);
 
-  openlog("fusestorage", LOG_CONS | LOG_PID, LOG_USER);
+  uint64_t size = AzureStorageFS::asAdapter->getSize(filePath);
+
+  syslog(LOG_INFO, "page blob size is %d\n", size);
 
   static struct buse_operations aop = {
       .read = AzureStorageFS::xmp_read,
@@ -34,11 +44,12 @@ int main(int argc, char *argv[])
       .disc = AzureStorageFS::xmp_disc,
       .flush = AzureStorageFS::xmp_flush,
       .trim = AzureStorageFS::xmp_trim,
-      .size = 128 * 1024 * 1024,
+      .size = size,
   };
   // get size of the blob
 
-  AzureStorageFS::data = malloc(aop.size);
+  //AzureStorageFS::data = malloc(aop.size);
 
-  return buse_main(argv[1], &aop, (void *)&AzureStorageFS::xmpl_debug);
+  //return buse_main(argv[1], &aop, (void *)&AzureStorageFS::xmpl_debug);
+  return 0;
 }
