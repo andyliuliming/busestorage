@@ -3,16 +3,8 @@
 #include <string.h>
 #include <syslog.h>
 #include "AzureStorageFS.h"
+#include "PathUtils.h"
 #include "buse.h"
-
-static struct buse_operations aop = {
-    .read = AzureStorageFS::xmp_read,
-    .write = AzureStorageFS::xmp_write,
-    .disc = AzureStorageFS::xmp_disc,
-    .flush = AzureStorageFS::xmp_flush,
-    .trim = AzureStorageFS::xmp_trim,
-    .size = 128 * 1024 * 1024,
-};
 
 int main(int argc, char *argv[])
 {
@@ -28,12 +20,23 @@ int main(int argc, char *argv[])
   }
 
   AzureStorageConfig *asConfig = new AzureStorageConfig("andliumysql1", "POi29VbeHAAHBiXyj/gy+MYdR1CuWG5kthAlQZQfm0rmk9zNiMo3lXfJqFgOW8gZC77tsiBVXIRIL9NDMLPkuQ==");
+  FilePath *filePath = new FilePath();
 
   AzureStorageFS::asEnv = new AzureStorageFSEnv();
 
   AzureStorageFS::asAdapter = new AzureStorageAdapter(asConfig);
 
   openlog("fusestorage", LOG_CONS | LOG_PID, LOG_USER);
+
+  static struct buse_operations aop = {
+      .read = AzureStorageFS::xmp_read,
+      .write = AzureStorageFS::xmp_write,
+      .disc = AzureStorageFS::xmp_disc,
+      .flush = AzureStorageFS::xmp_flush,
+      .trim = AzureStorageFS::xmp_trim,
+      .size = 128 * 1024 * 1024,
+  };
+  // get size of the blob
 
   AzureStorageFS::data = malloc(aop.size);
 
