@@ -1,56 +1,81 @@
-#include <fuse.h>
 #include <stdio.h>
-#include <iostream>
+#include <stdlib.h>
+#include <string.h>
 #include <syslog.h>
 #include "AzureStorageFS.h"
-struct fuse_operations examplefs_oper;
+#include "buse.h"
+
+static void *data;
+static int xmpl_debug = 1;
+
+static int xmp_read(void *buf, u_int32_t len, u_int64_t offset, void *userdata)
+{
+  if (*(int *)userdata)
+    fprintf(stderr, "R - %lu, %u\n", offset, len);
+  memcpy(buf, (char *)data + offset, len);
+  return 0;
+}
+
+static int xmp_write(const void *buf, u_int32_t len, u_int64_t offset, void *userdata)
+{
+  if (*(int *)userdata)
+    fprintf(stderr, "W - %lu, %u\n", offset, len);
+  memcpy((char *)data + offset, buf, len);
+  return 0;
+}
+
+static void xmp_disc(void *userdata)
+{
+  (void)(userdata);
+  fprintf(stderr, "Received a disconnect request.\n");
+}
+
+static int xmp_flush(void *userdata)
+{
+  (void)(userdata);
+  fprintf(stderr, "Received a flush request.\n");
+  return 0;
+}
+
+static int xmp_trim(u_int64_t from, u_int32_t len, void *userdata)
+{
+  (void)(userdata);
+  fprintf(stderr, "T - %lu, %u\n", from, len);
+  return 0;
+}
+
+
+static struct buse_operations aop = {
+  .read = xmp_read,
+  .write = xmp_write,
+  .disc = xmp_disc,
+  .flush = xmp_flush,
+  .trim = xmp_trim,
+  .size = 128 * 1024 * 1024,
+};
 
 int main(int argc, char *argv[])
 {
-    int fuse_stat;
-    AzureStorageConfig *asConfig = new AzureStorageConfig("andliumysql1","POi29VbeHAAHBiXyj/gy+MYdR1CuWG5kthAlQZQfm0rmk9zNiMo3lXfJqFgOW8gZC77tsiBVXIRIL9NDMLPkuQ==");
+  if (argc != 2)
+  {
+    fprintf(stderr, 
+        "Usage:\n"
+        "  %s /dev/nbd0\n"
+        "Don't forget to load nbd kernel module (`modprobe nbd`) and\n"
+        "run example from root.\n", argv[0]);
+    return 1;
+  }
 
-    AzureStorageFS::asEnv = new AzureStorageFSEnv();
+  AzureStorageConfig *asConfig = new AzureStorageConfig("andliumysql1","POi29VbeHAAHBiXyj/gy+MYdR1CuWG5kthAlQZQfm0rmk9zNiMo3lXfJqFgOW8gZC77tsiBVXIRIL9NDMLPkuQ==");
 
-    AzureStorageFS::asAdapter = new AzureStorageAdapter(asConfig);
-    
-    openlog("fusestorage", LOG_CONS | LOG_PID, LOG_USER);
+  AzureStorageFS::asEnv = new AzureStorageFSEnv();
 
-    examplefs_oper.getattr = AzureStorageFS::wrap_getattr;
-    examplefs_oper.readlink = AzureStorageFS::wrap_readlink;
-    examplefs_oper.getdir = NULL;
-    examplefs_oper.mknod = AzureStorageFS::wrap_mknod;
-    examplefs_oper.mkdir = AzureStorageFS::wrap_mkdir;
-    examplefs_oper.unlink = AzureStorageFS::wrap_unlink;
-    examplefs_oper.rmdir = AzureStorageFS::wrap_rmdir;
-    examplefs_oper.symlink = AzureStorageFS::wrap_symlink;
-    examplefs_oper.rename = AzureStorageFS::wrap_rename;
-    examplefs_oper.link = AzureStorageFS::wrap_link;
-    examplefs_oper.chmod = AzureStorageFS::wrap_chmod;
-    examplefs_oper.chown = AzureStorageFS::wrap_chown;
-    examplefs_oper.truncate = AzureStorageFS::wrap_truncate;
-    examplefs_oper.utime = AzureStorageFS::wrap_utime;
-    examplefs_oper.open = AzureStorageFS::wrap_open;
-    examplefs_oper.read = AzureStorageFS::wrap_read;
-    examplefs_oper.write = AzureStorageFS::wrap_write;
-    examplefs_oper.statfs = AzureStorageFS::wrap_statfs;
-    examplefs_oper.flush = AzureStorageFS::wrap_flush;
-    examplefs_oper.release = AzureStorageFS::wrap_release;
-    examplefs_oper.fsync = AzureStorageFS::wrap_fsync;
-    examplefs_oper.setxattr = AzureStorageFS::wrap_setxattr;
-    examplefs_oper.getxattr = AzureStorageFS::wrap_getxattr;
-    examplefs_oper.listxattr = AzureStorageFS::wrap_listxattr;
-    examplefs_oper.removexattr = AzureStorageFS::wrap_removexattr;
-    examplefs_oper.opendir = AzureStorageFS::wrap_opendir;
-    examplefs_oper.readdir = AzureStorageFS::wrap_readdir;
-    examplefs_oper.releasedir = AzureStorageFS::wrap_releasedir;
-    examplefs_oper.fsyncdir = AzureStorageFS::wrap_fsyncdir;
-    examplefs_oper.init = AzureStorageFS::wrap_init;
+  AzureStorageFS::asAdapter = new AzureStorageAdapter(asConfig);
+  
+  openlog("fusestorage", LOG_CONS | LOG_PID, LOG_USER);
 
-    syslog(LOG_INFO, "try to mount!\n");
-    fuse_stat = fuse_main(argc, argv, &examplefs_oper, NULL);
 
-    syslog(LOG_INFO, "fuse_main returned %d\n", fuse_stat);
+  data = malloc(aop.size);
 
-    return fuse_stat;
+  return buse_main(argv[1], &aop, (void *)&xmpl_debug);
 }
