@@ -1,0 +1,6 @@
+azure-storage-cpp
+CMakeCache.txt
+.gitignore~
+.gitignore.swp
+CMakeFiles
+bin/busestorage
