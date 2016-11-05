@@ -36,12 +36,12 @@
  * These helper functions were taken from cliserv.h in the nbd distribution.
  */
 #ifdef WORDS_BIGENDIAN
-u_int64_t ntohll(u_int64_t a)
+inline u_int64_t ntohll(u_int64_t a)
 {
   return a;
 }
 #else
-u_int64_t ntohll(u_int64_t a)
+inline u_int64_t ntohll(u_int64_t a)
 {
   u_int32_t lo = a & 0xffffffff;
   u_int32_t hi = a >> 32U;
@@ -84,7 +84,7 @@ static int write_all(int fd, char *buf, size_t count)
 int buse_main(const char *dev_file, const struct buse_operations *aop, void *userdata)
 {
   int sp[2];
-  int nbd, sk, err, tmp_fd;
+  int nbdhandle, sk, err, tmp_fd;
   u_int64_t from;
   u_int32_t len;
   ssize_t bytes_read;
@@ -95,8 +95,8 @@ int buse_main(const char *dev_file, const struct buse_operations *aop, void *use
   err = socketpair(AF_UNIX, SOCK_STREAM, 0, sp);
   assert(!err);
 
-  nbd = open(dev_file, O_RDWR);
-  if (nbd == -1)
+  nbdhandle = open(dev_file, O_RDWR);
+  if (nbdhandle == -1)
   {
     fprintf(stderr,
             "Failed to open `%s': %s\n"
@@ -106,9 +106,9 @@ int buse_main(const char *dev_file, const struct buse_operations *aop, void *use
     return 1;
   }
 
-  err = ioctl(nbd, NBD_SET_SIZE, aop->size);
+  err = ioctl(nbdhandle, NBD_SET_SIZE, aop->size);
   assert(err != -1);
-  err = ioctl(nbd, NBD_CLEAR_SOCK);
+  err = ioctl(nbdhandle, NBD_CLEAR_SOCK);
   assert(err != -1);
 
   if (!fork())
@@ -117,26 +117,26 @@ int buse_main(const char *dev_file, const struct buse_operations *aop, void *use
     close(sp[0]);
     sk = sp[1];
 
-    if (ioctl(nbd, NBD_SET_SOCK, sk) == -1)
+    if (ioctl(nbdhandle, NBD_SET_SOCK, sk) == -1)
     {
-      fprintf(stderr, "ioctl(nbd, NBD_SET_SOCK, sk) failed.[%s]\n", strerror(errno));
+      fprintf(stderr, "ioctl(nbdhandle, NBD_SET_SOCK, sk) failed.[%s]\n", strerror(errno));
     }
 #if defined NBD_SET_FLAGS && defined NBD_FLAG_SEND_TRIM
-    else if (ioctl(nbd, NBD_SET_FLAGS, NBD_FLAG_SEND_TRIM) == -1)
+    else if (ioctl(nbdhandle, NBD_SET_FLAGS, NBD_FLAG_SEND_TRIM) == -1)
     {
-      fprintf(stderr, "ioctl(nbd, NBD_SET_FLAGS, NBD_FLAG_SEND_TRIM) failed.[%s]\n", strerror(errno));
+      fprintf(stderr, "ioctl(nbdhandle, NBD_SET_FLAGS, NBD_FLAG_SEND_TRIM) failed.[%s]\n", strerror(errno));
     }
 #endif
     else
     {
-      err = ioctl(nbd, NBD_DO_IT);
+      err = ioctl(nbdhandle, NBD_DO_IT);
       fprintf(stderr, "nbd device terminated with code %d\n", err);
       if (err == -1)
         fprintf(stderr, "%s\n", strerror(errno));
     }
 
-    ioctl(nbd, NBD_CLEAR_QUE);
-    ioctl(nbd, NBD_CLEAR_SOCK);
+    ioctl(nbdhandle, NBD_CLEAR_QUE);
+    ioctl(nbdhandle, NBD_CLEAR_SOCK);
 
     exit(0);
   }
