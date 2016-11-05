@@ -67,16 +67,17 @@ public:
     azure::storage::cloud_blob_container container = blob_client->get_container_reference(_XPLATSTR(filePath->directory));
     azure::storage::cloud_block_blob blob1 = container.get_block_blob_reference(_XPLATSTR(filePath->fileName));
 
-    auto fileBlobStream = blob1.open_read();
+    concurrency::streams::container_buffer<std::vector<char>> containerBuffer;
+    concurrency::streams::ostream output_stream(containerBuffer);
 
-    //char_array_buffer sbuf(buf, size);
+    blob1.download_range_to_stream(output_stream, offset, size);
 
-    //fileBlobStream.seek(offset, std::ios_base::beg);
-    //fileBlobStream.read(sbuf, size);
+    int sizeRead = collec.size();
+    std::vector<char> collec = containerBuffer.collection();
+    char* char_arr = collec.data();
+    memcpy(bufOut, char_arr, sizeRead);
 
-    //blobstream.read();
-    //return result;
-    return 0;
+    return sizeRead;
   }
   ~AzureStorageAdapter()
   {
