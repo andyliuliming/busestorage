@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
 
   uint64_t size = AzureStorageFS::asAdapter->getSize(filePath);
 
-  syslog(LOG_INFO, "page blob size is %d\n", size);
+  syslog(LOG_INFO, "page blob size is %lu\n", size);
 
   static struct buse_operations aop = {
       .read = AzureStorageFS::xmp_read,

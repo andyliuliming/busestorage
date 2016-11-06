@@ -34,7 +34,8 @@ public:
     {
       fprintf(stderr, "R - %lu, %u\n", offset, len);
     }
-
+    //asAdapter->
+    
     memcpy(buf, (char *)data + offset, len);
     return 0;
   }

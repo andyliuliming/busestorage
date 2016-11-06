@@ -61,24 +61,36 @@ public:
       return 0;
     }
   }
+
   inline int read(FilePath *filePath, char *buf, size_t size, off_t offset)
   {
     //TODO: cache the container in memory.
     azure::storage::cloud_blob_container container = blob_client->get_container_reference(_XPLATSTR(filePath->directory));
-    azure::storage::cloud_block_blob blob1 = container.get_block_blob_reference(_XPLATSTR(filePath->fileName));
+    azure::storage::cloud_page_blob blob1 = container.get_page_blob_reference(_XPLATSTR(filePath->fileName));
 
     concurrency::streams::container_buffer<std::vector<char>> containerBuffer;
     concurrency::streams::ostream output_stream(containerBuffer);
-
     blob1.download_range_to_stream(output_stream, offset, size);
-
-    int sizeRead = collec.size();
     std::vector<char> collec = containerBuffer.collection();
-    char* char_arr = collec.data();
-    memcpy(bufOut, char_arr, sizeRead);
+    int sizeRead = collec.size();
+    char *char_arr = collec.data();
+    memcpy(buf, char_arr, sizeRead);
 
     return sizeRead;
   }
+
+  inline int write(FilePath *filePath, char *buf, size_t size, off_t offset)
+  {
+    azure::storage::cloud_blob_container container = blob_client->get_container_reference(_XPLATSTR(filePath->directory));
+    azure::storage::cloud_page_blob blob1 = container.get_page_blob_reference(_XPLATSTR(filePath->fileName));
+
+    std::vector<uint8_t> uploadBuffer(buf, buf + size);
+
+    auto stream = concurrency::streams::bytestream::open_istream(uploadBuffer);
+    blob1.upload_pages(stream, offset, utility::string_t());
+    return 0;
+  }
+
   ~AzureStorageAdapter()
   {
   }
