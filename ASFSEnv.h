@@ -1,17 +1,17 @@
-#ifndef azure_storage_fs_env_hh
-#define azure_storage_fs_env_hh
+#ifndef as_fs_env_hh
+#define as_fs_env_hh
 #include "PathUtils.h"
 #include "FileDescriptor.h"
 #include <map>
 #include <string>
-class AzureStorageFSEnv
+class ASFSEnv
 {
   private:
     std::map<long, FileDescriptor> m;
 
   public:
     long fd;
-    AzureStorageFSEnv()
+    ASFSEnv()
     {
         this->fd = 0;
     }
@@ -29,4 +29,4 @@ class AzureStorageFSEnv
     }
 };
 
-#endif //azure_storage_fs_env_hh
+#endif //as_fs_env_hh

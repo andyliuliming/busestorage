@@ -111,71 +111,98 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named busestorage
+# Target rules for targets named abstorage
 
 # Build rule for target.
-busestorage: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 busestorage
-.PHONY : busestorage
+abstorage: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 abstorage
+.PHONY : abstorage
 
 # fast build rule for target.
-busestorage/fast:
-	$(MAKE) -f CMakeFiles/busestorage.dir/build.make CMakeFiles/busestorage.dir/build
-.PHONY : busestorage/fast
+abstorage/fast:
+	$(MAKE) -f CMakeFiles/abstorage.dir/build.make CMakeFiles/abstorage.dir/build
+.PHONY : abstorage/fast
 
-AzureStorageBlockDevice.o: AzureStorageBlockDevice.cpp.o
+ABStorage.o: ABStorage.cpp.o
 
-.PHONY : AzureStorageBlockDevice.o
-
-# target to build an object file
-AzureStorageBlockDevice.cpp.o:
-	$(MAKE) -f CMakeFiles/busestorage.dir/build.make CMakeFiles/busestorage.dir/AzureStorageBlockDevice.cpp.o
-.PHONY : AzureStorageBlockDevice.cpp.o
-
-AzureStorageBlockDevice.i: AzureStorageBlockDevice.cpp.i
-
-.PHONY : AzureStorageBlockDevice.i
-
-# target to preprocess a source file
-AzureStorageBlockDevice.cpp.i:
-	$(MAKE) -f CMakeFiles/busestorage.dir/build.make CMakeFiles/busestorage.dir/AzureStorageBlockDevice.cpp.i
-.PHONY : AzureStorageBlockDevice.cpp.i
-
-AzureStorageBlockDevice.s: AzureStorageBlockDevice.cpp.s
-
-.PHONY : AzureStorageBlockDevice.s
-
-# target to generate assembly for a file
-AzureStorageBlockDevice.cpp.s:
-	$(MAKE) -f CMakeFiles/busestorage.dir/build.make CMakeFiles/busestorage.dir/AzureStorageBlockDevice.cpp.s
-.PHONY : AzureStorageBlockDevice.cpp.s
-
-AzureStorageFSEnv.o: AzureStorageFSEnv.cpp.o
-
-.PHONY : AzureStorageFSEnv.o
+.PHONY : ABStorage.o
 
 # target to build an object file
-AzureStorageFSEnv.cpp.o:
-	$(MAKE) -f CMakeFiles/busestorage.dir/build.make CMakeFiles/busestorage.dir/AzureStorageFSEnv.cpp.o
-.PHONY : AzureStorageFSEnv.cpp.o
+ABStorage.cpp.o:
+	$(MAKE) -f CMakeFiles/abstorage.dir/build.make CMakeFiles/abstorage.dir/ABStorage.cpp.o
+.PHONY : ABStorage.cpp.o
 
-AzureStorageFSEnv.i: AzureStorageFSEnv.cpp.i
+ABStorage.i: ABStorage.cpp.i
 
-.PHONY : AzureStorageFSEnv.i
+.PHONY : ABStorage.i
 
 # target to preprocess a source file
-AzureStorageFSEnv.cpp.i:
-	$(MAKE) -f CMakeFiles/busestorage.dir/build.make CMakeFiles/busestorage.dir/AzureStorageFSEnv.cpp.i
-.PHONY : AzureStorageFSEnv.cpp.i
+ABStorage.cpp.i:
+	$(MAKE) -f CMakeFiles/abstorage.dir/build.make CMakeFiles/abstorage.dir/ABStorage.cpp.i
+.PHONY : ABStorage.cpp.i
 
-AzureStorageFSEnv.s: AzureStorageFSEnv.cpp.s
+ABStorage.s: ABStorage.cpp.s
 
-.PHONY : AzureStorageFSEnv.s
+.PHONY : ABStorage.s
 
 # target to generate assembly for a file
-AzureStorageFSEnv.cpp.s:
-	$(MAKE) -f CMakeFiles/busestorage.dir/build.make CMakeFiles/busestorage.dir/AzureStorageFSEnv.cpp.s
-.PHONY : AzureStorageFSEnv.cpp.s
+ABStorage.cpp.s:
+	$(MAKE) -f CMakeFiles/abstorage.dir/build.make CMakeFiles/abstorage.dir/ABStorage.cpp.s
+.PHONY : ABStorage.cpp.s
+
+ASBlockDevice.o: ASBlockDevice.cpp.o
+
+.PHONY : ASBlockDevice.o
+
+# target to build an object file
+ASBlockDevice.cpp.o:
+	$(MAKE) -f CMakeFiles/abstorage.dir/build.make CMakeFiles/abstorage.dir/ASBlockDevice.cpp.o
+.PHONY : ASBlockDevice.cpp.o
+
+ASBlockDevice.i: ASBlockDevice.cpp.i
+
+.PHONY : ASBlockDevice.i
+
+# target to preprocess a source file
+ASBlockDevice.cpp.i:
+	$(MAKE) -f CMakeFiles/abstorage.dir/build.make CMakeFiles/abstorage.dir/ASBlockDevice.cpp.i
+.PHONY : ASBlockDevice.cpp.i
+
+ASBlockDevice.s: ASBlockDevice.cpp.s
+
+.PHONY : ASBlockDevice.s
+
+# target to generate assembly for a file
+ASBlockDevice.cpp.s:
+	$(MAKE) -f CMakeFiles/abstorage.dir/build.make CMakeFiles/abstorage.dir/ASBlockDevice.cpp.s
+.PHONY : ASBlockDevice.cpp.s
+
+ASFSEnv.o: ASFSEnv.cpp.o
+
+.PHONY : ASFSEnv.o
+
+# target to build an object file
+ASFSEnv.cpp.o:
+	$(MAKE) -f CMakeFiles/abstorage.dir/build.make CMakeFiles/abstorage.dir/ASFSEnv.cpp.o
+.PHONY : ASFSEnv.cpp.o
+
+ASFSEnv.i: ASFSEnv.cpp.i
+
+.PHONY : ASFSEnv.i
+
+# target to preprocess a source file
+ASFSEnv.cpp.i:
+	$(MAKE) -f CMakeFiles/abstorage.dir/build.make CMakeFiles/abstorage.dir/ASFSEnv.cpp.i
+.PHONY : ASFSEnv.cpp.i
+
+ASFSEnv.s: ASFSEnv.cpp.s
+
+.PHONY : ASFSEnv.s
+
+# target to generate assembly for a file
+ASFSEnv.cpp.s:
+	$(MAKE) -f CMakeFiles/abstorage.dir/build.make CMakeFiles/abstorage.dir/ASFSEnv.cpp.s
+.PHONY : ASFSEnv.cpp.s
 
 PageBlobAdapter.o: PageBlobAdapter.cpp.o
 
@@ -183,7 +210,7 @@ PageBlobAdapter.o: PageBlobAdapter.cpp.o
 
 # target to build an object file
 PageBlobAdapter.cpp.o:
-	$(MAKE) -f CMakeFiles/busestorage.dir/build.make CMakeFiles/busestorage.dir/PageBlobAdapter.cpp.o
+	$(MAKE) -f CMakeFiles/abstorage.dir/build.make CMakeFiles/abstorage.dir/PageBlobAdapter.cpp.o
 .PHONY : PageBlobAdapter.cpp.o
 
 PageBlobAdapter.i: PageBlobAdapter.cpp.i
@@ -192,7 +219,7 @@ PageBlobAdapter.i: PageBlobAdapter.cpp.i
 
 # target to preprocess a source file
 PageBlobAdapter.cpp.i:
-	$(MAKE) -f CMakeFiles/busestorage.dir/build.make CMakeFiles/busestorage.dir/PageBlobAdapter.cpp.i
+	$(MAKE) -f CMakeFiles/abstorage.dir/build.make CMakeFiles/abstorage.dir/PageBlobAdapter.cpp.i
 .PHONY : PageBlobAdapter.cpp.i
 
 PageBlobAdapter.s: PageBlobAdapter.cpp.s
@@ -201,7 +228,7 @@ PageBlobAdapter.s: PageBlobAdapter.cpp.s
 
 # target to generate assembly for a file
 PageBlobAdapter.cpp.s:
-	$(MAKE) -f CMakeFiles/busestorage.dir/build.make CMakeFiles/busestorage.dir/PageBlobAdapter.cpp.s
+	$(MAKE) -f CMakeFiles/abstorage.dir/build.make CMakeFiles/abstorage.dir/PageBlobAdapter.cpp.s
 .PHONY : PageBlobAdapter.cpp.s
 
 PathUtils.o: PathUtils.cpp.o
@@ -210,7 +237,7 @@ PathUtils.o: PathUtils.cpp.o
 
 # target to build an object file
 PathUtils.cpp.o:
-	$(MAKE) -f CMakeFiles/busestorage.dir/build.make CMakeFiles/busestorage.dir/PathUtils.cpp.o
+	$(MAKE) -f CMakeFiles/abstorage.dir/build.make CMakeFiles/abstorage.dir/PathUtils.cpp.o
 .PHONY : PathUtils.cpp.o
 
 PathUtils.i: PathUtils.cpp.i
@@ -219,7 +246,7 @@ PathUtils.i: PathUtils.cpp.i
 
 # target to preprocess a source file
 PathUtils.cpp.i:
-	$(MAKE) -f CMakeFiles/busestorage.dir/build.make CMakeFiles/busestorage.dir/PathUtils.cpp.i
+	$(MAKE) -f CMakeFiles/abstorage.dir/build.make CMakeFiles/abstorage.dir/PathUtils.cpp.i
 .PHONY : PathUtils.cpp.i
 
 PathUtils.s: PathUtils.cpp.s
@@ -228,7 +255,7 @@ PathUtils.s: PathUtils.cpp.s
 
 # target to generate assembly for a file
 PathUtils.cpp.s:
-	$(MAKE) -f CMakeFiles/busestorage.dir/build.make CMakeFiles/busestorage.dir/PathUtils.cpp.s
+	$(MAKE) -f CMakeFiles/abstorage.dir/build.make CMakeFiles/abstorage.dir/PathUtils.cpp.s
 .PHONY : PathUtils.cpp.s
 
 buse.o: buse.cpp.o
@@ -237,7 +264,7 @@ buse.o: buse.cpp.o
 
 # target to build an object file
 buse.cpp.o:
-	$(MAKE) -f CMakeFiles/busestorage.dir/build.make CMakeFiles/busestorage.dir/buse.cpp.o
+	$(MAKE) -f CMakeFiles/abstorage.dir/build.make CMakeFiles/abstorage.dir/buse.cpp.o
 .PHONY : buse.cpp.o
 
 buse.i: buse.cpp.i
@@ -246,7 +273,7 @@ buse.i: buse.cpp.i
 
 # target to preprocess a source file
 buse.cpp.i:
-	$(MAKE) -f CMakeFiles/busestorage.dir/build.make CMakeFiles/busestorage.dir/buse.cpp.i
+	$(MAKE) -f CMakeFiles/abstorage.dir/build.make CMakeFiles/abstorage.dir/buse.cpp.i
 .PHONY : buse.cpp.i
 
 buse.s: buse.cpp.s
@@ -255,35 +282,8 @@ buse.s: buse.cpp.s
 
 # target to generate assembly for a file
 buse.cpp.s:
-	$(MAKE) -f CMakeFiles/busestorage.dir/build.make CMakeFiles/busestorage.dir/buse.cpp.s
+	$(MAKE) -f CMakeFiles/abstorage.dir/build.make CMakeFiles/abstorage.dir/buse.cpp.s
 .PHONY : buse.cpp.s
-
-busestorage.o: busestorage.cpp.o
-
-.PHONY : busestorage.o
-
-# target to build an object file
-busestorage.cpp.o:
-	$(MAKE) -f CMakeFiles/busestorage.dir/build.make CMakeFiles/busestorage.dir/busestorage.cpp.o
-.PHONY : busestorage.cpp.o
-
-busestorage.i: busestorage.cpp.i
-
-.PHONY : busestorage.i
-
-# target to preprocess a source file
-busestorage.cpp.i:
-	$(MAKE) -f CMakeFiles/busestorage.dir/build.make CMakeFiles/busestorage.dir/busestorage.cpp.i
-.PHONY : busestorage.cpp.i
-
-busestorage.s: busestorage.cpp.s
-
-.PHONY : busestorage.s
-
-# target to generate assembly for a file
-busestorage.cpp.s:
-	$(MAKE) -f CMakeFiles/busestorage.dir/build.make CMakeFiles/busestorage.dir/busestorage.cpp.s
-.PHONY : busestorage.cpp.s
 
 # Help Target
 help:
@@ -293,13 +293,16 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... busestorage"
-	@echo "... AzureStorageBlockDevice.o"
-	@echo "... AzureStorageBlockDevice.i"
-	@echo "... AzureStorageBlockDevice.s"
-	@echo "... AzureStorageFSEnv.o"
-	@echo "... AzureStorageFSEnv.i"
-	@echo "... AzureStorageFSEnv.s"
+	@echo "... abstorage"
+	@echo "... ABStorage.o"
+	@echo "... ABStorage.i"
+	@echo "... ABStorage.s"
+	@echo "... ASBlockDevice.o"
+	@echo "... ASBlockDevice.i"
+	@echo "... ASBlockDevice.s"
+	@echo "... ASFSEnv.o"
+	@echo "... ASFSEnv.i"
+	@echo "... ASFSEnv.s"
 	@echo "... PageBlobAdapter.o"
 	@echo "... PageBlobAdapter.i"
 	@echo "... PageBlobAdapter.s"
@@ -309,9 +312,6 @@ help:
 	@echo "... buse.o"
 	@echo "... buse.i"
 	@echo "... buse.s"
-	@echo "... busestorage.o"
-	@echo "... busestorage.i"
-	@echo "... busestorage.s"
 .PHONY : help
 
 

@@ -1,5 +1,5 @@
-#ifndef azure_storage_fs_hh
-#define azure_storage_fs_hh
+#ifndef as_block_device_hh
+#define as_block_device_hh
 
 #include <ctype.h>
 #include <dirent.h>
@@ -14,16 +14,16 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/xattr.h>
-#include "AzureStorageConfig.h"
-#include "AzureStorageFSEnv.h"
-#include "AzureStorageAdapter.h"
+#include "ASConfig.h"
+#include "ASFSEnv.h"
+#include "PageBlobAdapter.h"
 
-class AzureStorageFS
+class ASBlockDevice
 {
 private:
 public:
-  static AzureStorageFSEnv *asEnv;
-  static AzureStorageAdapter *asAdapter;
+  static ASFSEnv *asEnv;
+  static PageBlobAdapter *asAdapter;
 
   static void *data;
   static int xmpl_debug;
@@ -35,7 +35,7 @@ public:
       fprintf(stderr, "R - %lu, %u\n", offset, len);
     }
     //asAdapter->
-    
+
     memcpy(buf, (char *)data + offset, len);
     return 0;
   }
@@ -71,4 +71,4 @@ public:
   }
 };
 
-#endif //azure_storage_fs_hh
+#endif //as_block_device_hh

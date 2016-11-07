@@ -1,17 +1,17 @@
-#ifndef azure_storage_config_hh
-#define azure_storage_config_hh
+#ifndef as_config_hh
+#define as_config_hh
 #include <string>
-class AzureStorageConfig
+class ASConfig
 {
   public:
     std::string storageAccountName;
     std::string storageAccountKey;
     
-    AzureStorageConfig(const char * storageAccountName, const char * storageAccountKey)
+    ASConfig(const char * storageAccountName, const char * storageAccountKey)
     {
         this->storageAccountName = storageAccountName;
         this->storageAccountKey = storageAccountKey;
     }
 };
 
-#endif //azure_storage_config_hh
+#endif //as_config_hh
