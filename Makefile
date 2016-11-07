@@ -123,59 +123,32 @@ busestorage/fast:
 	$(MAKE) -f CMakeFiles/busestorage.dir/build.make CMakeFiles/busestorage.dir/build
 .PHONY : busestorage/fast
 
-AzureStorageAdapter.o: AzureStorageAdapter.cpp.o
+AzureStorageBlockDevice.o: AzureStorageBlockDevice.cpp.o
 
-.PHONY : AzureStorageAdapter.o
-
-# target to build an object file
-AzureStorageAdapter.cpp.o:
-	$(MAKE) -f CMakeFiles/busestorage.dir/build.make CMakeFiles/busestorage.dir/AzureStorageAdapter.cpp.o
-.PHONY : AzureStorageAdapter.cpp.o
-
-AzureStorageAdapter.i: AzureStorageAdapter.cpp.i
-
-.PHONY : AzureStorageAdapter.i
-
-# target to preprocess a source file
-AzureStorageAdapter.cpp.i:
-	$(MAKE) -f CMakeFiles/busestorage.dir/build.make CMakeFiles/busestorage.dir/AzureStorageAdapter.cpp.i
-.PHONY : AzureStorageAdapter.cpp.i
-
-AzureStorageAdapter.s: AzureStorageAdapter.cpp.s
-
-.PHONY : AzureStorageAdapter.s
-
-# target to generate assembly for a file
-AzureStorageAdapter.cpp.s:
-	$(MAKE) -f CMakeFiles/busestorage.dir/build.make CMakeFiles/busestorage.dir/AzureStorageAdapter.cpp.s
-.PHONY : AzureStorageAdapter.cpp.s
-
-AzureStorageFS.o: AzureStorageFS.cpp.o
-
-.PHONY : AzureStorageFS.o
+.PHONY : AzureStorageBlockDevice.o
 
 # target to build an object file
-AzureStorageFS.cpp.o:
-	$(MAKE) -f CMakeFiles/busestorage.dir/build.make CMakeFiles/busestorage.dir/AzureStorageFS.cpp.o
-.PHONY : AzureStorageFS.cpp.o
+AzureStorageBlockDevice.cpp.o:
+	$(MAKE) -f CMakeFiles/busestorage.dir/build.make CMakeFiles/busestorage.dir/AzureStorageBlockDevice.cpp.o
+.PHONY : AzureStorageBlockDevice.cpp.o
 
-AzureStorageFS.i: AzureStorageFS.cpp.i
+AzureStorageBlockDevice.i: AzureStorageBlockDevice.cpp.i
 
-.PHONY : AzureStorageFS.i
+.PHONY : AzureStorageBlockDevice.i
 
 # target to preprocess a source file
-AzureStorageFS.cpp.i:
-	$(MAKE) -f CMakeFiles/busestorage.dir/build.make CMakeFiles/busestorage.dir/AzureStorageFS.cpp.i
-.PHONY : AzureStorageFS.cpp.i
+AzureStorageBlockDevice.cpp.i:
+	$(MAKE) -f CMakeFiles/busestorage.dir/build.make CMakeFiles/busestorage.dir/AzureStorageBlockDevice.cpp.i
+.PHONY : AzureStorageBlockDevice.cpp.i
 
-AzureStorageFS.s: AzureStorageFS.cpp.s
+AzureStorageBlockDevice.s: AzureStorageBlockDevice.cpp.s
 
-.PHONY : AzureStorageFS.s
+.PHONY : AzureStorageBlockDevice.s
 
 # target to generate assembly for a file
-AzureStorageFS.cpp.s:
-	$(MAKE) -f CMakeFiles/busestorage.dir/build.make CMakeFiles/busestorage.dir/AzureStorageFS.cpp.s
-.PHONY : AzureStorageFS.cpp.s
+AzureStorageBlockDevice.cpp.s:
+	$(MAKE) -f CMakeFiles/busestorage.dir/build.make CMakeFiles/busestorage.dir/AzureStorageBlockDevice.cpp.s
+.PHONY : AzureStorageBlockDevice.cpp.s
 
 AzureStorageFSEnv.o: AzureStorageFSEnv.cpp.o
 
@@ -203,6 +176,33 @@ AzureStorageFSEnv.s: AzureStorageFSEnv.cpp.s
 AzureStorageFSEnv.cpp.s:
 	$(MAKE) -f CMakeFiles/busestorage.dir/build.make CMakeFiles/busestorage.dir/AzureStorageFSEnv.cpp.s
 .PHONY : AzureStorageFSEnv.cpp.s
+
+PageBlobAdapter.o: PageBlobAdapter.cpp.o
+
+.PHONY : PageBlobAdapter.o
+
+# target to build an object file
+PageBlobAdapter.cpp.o:
+	$(MAKE) -f CMakeFiles/busestorage.dir/build.make CMakeFiles/busestorage.dir/PageBlobAdapter.cpp.o
+.PHONY : PageBlobAdapter.cpp.o
+
+PageBlobAdapter.i: PageBlobAdapter.cpp.i
+
+.PHONY : PageBlobAdapter.i
+
+# target to preprocess a source file
+PageBlobAdapter.cpp.i:
+	$(MAKE) -f CMakeFiles/busestorage.dir/build.make CMakeFiles/busestorage.dir/PageBlobAdapter.cpp.i
+.PHONY : PageBlobAdapter.cpp.i
+
+PageBlobAdapter.s: PageBlobAdapter.cpp.s
+
+.PHONY : PageBlobAdapter.s
+
+# target to generate assembly for a file
+PageBlobAdapter.cpp.s:
+	$(MAKE) -f CMakeFiles/busestorage.dir/build.make CMakeFiles/busestorage.dir/PageBlobAdapter.cpp.s
+.PHONY : PageBlobAdapter.cpp.s
 
 PathUtils.o: PathUtils.cpp.o
 
@@ -294,15 +294,15 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... busestorage"
-	@echo "... AzureStorageAdapter.o"
-	@echo "... AzureStorageAdapter.i"
-	@echo "... AzureStorageAdapter.s"
-	@echo "... AzureStorageFS.o"
-	@echo "... AzureStorageFS.i"
-	@echo "... AzureStorageFS.s"
+	@echo "... AzureStorageBlockDevice.o"
+	@echo "... AzureStorageBlockDevice.i"
+	@echo "... AzureStorageBlockDevice.s"
 	@echo "... AzureStorageFSEnv.o"
 	@echo "... AzureStorageFSEnv.i"
 	@echo "... AzureStorageFSEnv.s"
+	@echo "... PageBlobAdapter.o"
+	@echo "... PageBlobAdapter.i"
+	@echo "... PageBlobAdapter.s"
 	@echo "... PathUtils.o"
 	@echo "... PathUtils.i"
 	@echo "... PathUtils.s"

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <syslog.h>
-#include "AzureStorageFS.h"
+#include "AzureStorageBlockDevice.h"
 #include "PathUtils.h"
 #include "buse.h"
 
@@ -30,20 +30,20 @@ int main(int argc, char *argv[])
   filePath->fileName = new char[strlen("testdisk.vhd") + 1];
   strcpy(filePath->fileName, "testdisk.vhd");
 
-  AzureStorageFS::asEnv = new AzureStorageFSEnv();
+  AzureStorageBlockDevice::asEnv = new AzureStorageFSEnv();
 
-  AzureStorageFS::asAdapter = new AzureStorageAdapter(asConfig);
+  AzureStorageBlockDevice::asAdapter = new PageBlobAdapter(asConfig);
 
-  uint64_t size = AzureStorageFS::asAdapter->getSize(filePath);
+  uint64_t size = AzureStorageBlockDevice::asAdapter->getSize(filePath);
 
   syslog(LOG_INFO, "page blob size is %lu\n", size);
 
   static struct buse_operations aop = {
-      .read = AzureStorageFS::xmp_read,
-      .write = AzureStorageFS::xmp_write,
-      .disc = AzureStorageFS::xmp_disc,
-      .flush = AzureStorageFS::xmp_flush,
-      .trim = AzureStorageFS::xmp_trim,
+      .read = AzureStorageBlockDevice::xmp_read,
+      .write = AzureStorageBlockDevice::xmp_write,
+      .disc = AzureStorageBlockDevice::xmp_disc,
+      .flush = AzureStorageBlockDevice::xmp_flush,
+      .trim = AzureStorageBlockDevice::xmp_trim,
       .size = size,
   };
   // get size of the blob
