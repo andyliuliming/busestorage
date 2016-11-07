@@ -50,10 +50,5 @@ int main(int argc, char *argv[])
       .trim = ASBlockDevice::xmp_trim,
       .size = size,
   };
-  // get size of the blob
-
-  //AzureStorageFS::data = malloc(aop.size);
-
-  //return buse_main(argv[1], &aop, (void *)&AzureStorageFS::xmpl_debug);
-  return 0;
+  return buse_main(argv[1], &aop, (void *)&ASBlockDevice::xmpl_debug);
 }

@@ -8,4 +8,3 @@
 ASFSEnv *ASBlockDevice::asEnv = NULL;
 PageBlobAdapter *ASBlockDevice::asAdapter = NULL;
 int ASBlockDevice::xmpl_debug = 1;
-void *ASBlockDevice::data = NULL;

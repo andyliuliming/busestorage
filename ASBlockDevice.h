@@ -25,7 +25,6 @@ public:
   static ASFSEnv *asEnv;
   static PageBlobAdapter *asAdapter;
 
-  static void *data;
   static int xmpl_debug;
 
   static int xmp_read(void *buf, u_int32_t len, u_int64_t offset, void *userdata)
@@ -34,9 +33,9 @@ public:
     {
       fprintf(stderr, "R - %lu, %u\n", offset, len);
     }
-    //asAdapter->
+    asAdapter->read((char*)buf, len, offset);
 
-    memcpy(buf, (char *)data + offset, len);
+    //memcpy(buf, (char *)data + offset, len);
     return 0;
   }
 
@@ -46,7 +45,8 @@ public:
     {
       fprintf(stderr, "W - %lu, %u\n", offset, len);
     }
-    memcpy((char *)data + offset, buf, len);
+    asAdapter->write((char*)buf, len, offset);
+    //memcpy((char *)data + offset, buf, len);
     return 0;
   }
 
