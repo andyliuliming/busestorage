@@ -204,33 +204,6 @@ ASFSEnv.cpp.s:
 	$(MAKE) -f CMakeFiles/abstorage.dir/build.make CMakeFiles/abstorage.dir/ASFSEnv.cpp.s
 .PHONY : ASFSEnv.cpp.s
 
-PageBlobAdapter.o: PageBlobAdapter.cpp.o
-
-.PHONY : PageBlobAdapter.o
-
-# target to build an object file
-PageBlobAdapter.cpp.o:
-	$(MAKE) -f CMakeFiles/abstorage.dir/build.make CMakeFiles/abstorage.dir/PageBlobAdapter.cpp.o
-.PHONY : PageBlobAdapter.cpp.o
-
-PageBlobAdapter.i: PageBlobAdapter.cpp.i
-
-.PHONY : PageBlobAdapter.i
-
-# target to preprocess a source file
-PageBlobAdapter.cpp.i:
-	$(MAKE) -f CMakeFiles/abstorage.dir/build.make CMakeFiles/abstorage.dir/PageBlobAdapter.cpp.i
-.PHONY : PageBlobAdapter.cpp.i
-
-PageBlobAdapter.s: PageBlobAdapter.cpp.s
-
-.PHONY : PageBlobAdapter.s
-
-# target to generate assembly for a file
-PageBlobAdapter.cpp.s:
-	$(MAKE) -f CMakeFiles/abstorage.dir/build.make CMakeFiles/abstorage.dir/PageBlobAdapter.cpp.s
-.PHONY : PageBlobAdapter.cpp.s
-
 PathUtils.o: PathUtils.cpp.o
 
 .PHONY : PathUtils.o
@@ -257,6 +230,33 @@ PathUtils.s: PathUtils.cpp.s
 PathUtils.cpp.s:
 	$(MAKE) -f CMakeFiles/abstorage.dir/build.make CMakeFiles/abstorage.dir/PathUtils.cpp.s
 .PHONY : PathUtils.cpp.s
+
+SinglePageBlobAdapter.o: SinglePageBlobAdapter.cpp.o
+
+.PHONY : SinglePageBlobAdapter.o
+
+# target to build an object file
+SinglePageBlobAdapter.cpp.o:
+	$(MAKE) -f CMakeFiles/abstorage.dir/build.make CMakeFiles/abstorage.dir/SinglePageBlobAdapter.cpp.o
+.PHONY : SinglePageBlobAdapter.cpp.o
+
+SinglePageBlobAdapter.i: SinglePageBlobAdapter.cpp.i
+
+.PHONY : SinglePageBlobAdapter.i
+
+# target to preprocess a source file
+SinglePageBlobAdapter.cpp.i:
+	$(MAKE) -f CMakeFiles/abstorage.dir/build.make CMakeFiles/abstorage.dir/SinglePageBlobAdapter.cpp.i
+.PHONY : SinglePageBlobAdapter.cpp.i
+
+SinglePageBlobAdapter.s: SinglePageBlobAdapter.cpp.s
+
+.PHONY : SinglePageBlobAdapter.s
+
+# target to generate assembly for a file
+SinglePageBlobAdapter.cpp.s:
+	$(MAKE) -f CMakeFiles/abstorage.dir/build.make CMakeFiles/abstorage.dir/SinglePageBlobAdapter.cpp.s
+.PHONY : SinglePageBlobAdapter.cpp.s
 
 buse.o: buse.cpp.o
 
@@ -303,12 +303,12 @@ help:
 	@echo "... ASFSEnv.o"
 	@echo "... ASFSEnv.i"
 	@echo "... ASFSEnv.s"
-	@echo "... PageBlobAdapter.o"
-	@echo "... PageBlobAdapter.i"
-	@echo "... PageBlobAdapter.s"
 	@echo "... PathUtils.o"
 	@echo "... PathUtils.i"
 	@echo "... PathUtils.s"
+	@echo "... SinglePageBlobAdapter.o"
+	@echo "... SinglePageBlobAdapter.i"
+	@echo "... SinglePageBlobAdapter.s"
 	@echo "... buse.o"
 	@echo "... buse.i"
 	@echo "... buse.s"

@@ -9,13 +9,13 @@
 #include "was/blob.h"
 #include "ASConfig.h"
 
-class PageBlobAdapter
+class SinglePageBlobAdapter
 {
 private:
   azure::storage::cloud_page_blob &blob;
 
 public:
-  PageBlobAdapter(azure::storage::cloud_page_blob &page_blob) : blob(page_blob)
+  SinglePageBlobAdapter(azure::storage::cloud_page_blob &page_blob) : blob(page_blob)
   {
   }
 
@@ -51,7 +51,7 @@ public:
     blob.upload_pages(stream, offset, utility::string_t());
     return 0;
   }
-  ~PageBlobAdapter()
+  ~SinglePageBlobAdapter()
   {
   }
 };

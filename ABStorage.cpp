@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <syslog.h>
-#include "PageBlobAdapter.h"
+#include "SinglePageBlobAdapter.h"
 #include "CloudPageBlobBuilder.h"
 #include "ASBlockDevice.h"
 #include "PathUtils.h"
@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
             "Usage:\n"
             "  %s /dev/nbd0\n"
             "Don't forget to load nbd kernel module (`modprobe nbd`) and\n"
-            "run example from root.\n",
+            "run from root.\n",
             argv[0]);
     return 1;
   }
@@ -36,7 +36,8 @@ int main(int argc, char *argv[])
 
   CloudPageBlobBuilder cloudPageBlobBuilder;
   azure::storage::cloud_page_blob pageBlob = cloudPageBlobBuilder.build_cloud_page_blob(asConfig, filePath);
-  ASBlockDevice::asAdapter = new PageBlobAdapter(pageBlob);
+
+  ASBlockDevice::asAdapter = new SinglePageBlobAdapter(pageBlob);
 
   uint64_t size = ASBlockDevice::asAdapter->getSize();
 
