@@ -22,7 +22,6 @@ class ASBlockDevice
 {
 private:
 public:
-  static ASFSEnv *asEnv;
   static AbstractPageBlobAdapter *asAdapter;
 
   static int xmpl_debug;

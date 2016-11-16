@@ -25,21 +25,24 @@ int main(int argc, char *argv[])
   openlog("abstorage", LOG_CONS | LOG_PID, LOG_USER);
 
   ASConfig *asConfig = new ASConfig("andliumysql1", "POi29VbeHAAHBiXyj/gy+MYdR1CuWG5kthAlQZQfm0rmk9zNiMo3lXfJqFgOW8gZC77tsiBVXIRIL9NDMLPkuQ==");
-  FilePath *filePath = new FilePath();
 
-  filePath->directory = new char[strlen("abc") + 1];
-  strcpy(filePath->directory, "abc");
+  FilePath *disk1Path = new FilePath();
+  disk1Path->directory = new char[strlen("abc") + 1];
+  strcpy(disk1Path->directory, "abc");
+  disk1Path->fileName = new char[strlen("testdisk.vhd") + 1];
+  strcpy(disk1Path->fileName, "testdisk.vhd");
 
-  filePath->fileName = new char[strlen("testdisk.vhd") + 1];
-  strcpy(filePath->fileName, "testdisk.vhd");
-
-  ASBlockDevice::asEnv = new ASFSEnv();
+  FilePath *disk2Path = new FilePath();
+  disk2Path->directory = new char[strlen("abc1") + 1];
+  strcpy(disk2Path->directory, "abc1");
+  disk2Path->fileName = new char[strlen("testdisk.vhd") + 1];
+  strcpy(disk2Path->fileName, "testdisk.vhd");
 
   CloudPageBlobBuilder cloudPageBlobBuilder;
-  azure::storage::cloud_page_blob pageBlob = cloudPageBlobBuilder.build_cloud_page_blob(asConfig, filePath);
+  azure::storage::cloud_page_blob pageBlob1 = cloudPageBlobBuilder.build_cloud_page_blob(asConfig, disk1Path);
+  azure::storage::cloud_page_blob pageBlob2 = cloudPageBlobBuilder.build_cloud_page_blob(asConfig, disk2Path);
 
-
-  ASBlockDevice::asAdapter = new SinglePageBlobAdapter(pageBlob);
+  ASBlockDevice::asAdapter = new SinglePageBlobAdapter(pageBlob1);
 
   uint64_t size = ASBlockDevice::asAdapter->getSize();
 

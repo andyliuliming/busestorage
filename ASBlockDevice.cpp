@@ -5,6 +5,5 @@
 #include <cstring>
 #include <unistd.h>
 #include <sys/types.h>
-ASFSEnv *ASBlockDevice::asEnv = NULL;
 AbstractPageBlobAdapter *ASBlockDevice::asAdapter = NULL;
 int ASBlockDevice::xmpl_debug = 1;
