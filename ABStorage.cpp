@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
     return 1;
   }
 
-  openlog("fusestorage", LOG_CONS | LOG_PID, LOG_USER);
+  openlog("abstorage", LOG_CONS | LOG_PID, LOG_USER);
 
   ASConfig *asConfig = new ASConfig("andliumysql1", "POi29VbeHAAHBiXyj/gy+MYdR1CuWG5kthAlQZQfm0rmk9zNiMo3lXfJqFgOW8gZC77tsiBVXIRIL9NDMLPkuQ==");
   FilePath *filePath = new FilePath();
@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
   CloudPageBlobBuilder cloudPageBlobBuilder;
   azure::storage::cloud_page_blob pageBlob = cloudPageBlobBuilder.build_cloud_page_blob(asConfig, filePath);
 
-  
+
   ASBlockDevice::asAdapter = new SinglePageBlobAdapter(pageBlob);
 
   uint64_t size = ASBlockDevice::asAdapter->getSize();

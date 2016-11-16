@@ -155,6 +155,12 @@ int buse_main(const char *dev_file, const struct buse_operations *aop, void *use
   reply.magic = htonl(NBD_REPLY_MAGIC);
   reply.error = htonl(0);
 
+  //TODO we should not judge in every request.
+  if (!aop->read||!aop->write)
+  {
+    return htonl(EPERM);
+  }
+
   while ((bytes_read = read(sk, &request, sizeof(request))) > 0)
   {
     assert(bytes_read == sizeof(request));
@@ -176,33 +182,16 @@ int buse_main(const char *dev_file, const struct buse_operations *aop, void *use
       fprintf(stderr, "Request for read of size %d\n", len);
       /* Fill with zero in case actual read is not implemented */
       chunk = malloc(len);
-      if (aop->read)
-      {
-        reply.error = aop->read(chunk, len, from, userdata);
-      }
-      else
-      {
-        /* If user not specified read operation, return EPERM error */
-        reply.error = htonl(EPERM);
-      }
+      reply.error = aop->read(chunk, len, from, userdata);
       write_all(sk, (char *)&reply, sizeof(struct nbd_reply));
       write_all(sk, (char *)chunk, len);
-
       free(chunk);
       break;
     case NBD_CMD_WRITE:
       fprintf(stderr, "Request for write of size %d\n", len);
       chunk = malloc(len);
-      read_all(sk, (char *)chunk, len);
-      if (aop->write)
-      {
-        reply.error = aop->write(chunk, len, from, userdata);
-      }
-      else
-      {
-        /* If user not specified write operation, return EPERM error */
-        reply.error = htonl(EPERM);
-      }
+      read_all(sk, (char *)chunk, len);      
+      reply.error = aop->write(chunk, len, from, userdata);      
       free(chunk);
       write_all(sk, (char *)&reply, sizeof(struct nbd_reply));
       break;
