@@ -1,5 +1,6 @@
 #ifndef page_blob_adapter_hh
 #define page_blob_adapter_hh
+#include "AbstractPageBlobAdapter.h"
 #include "PathUtils.h"
 #include "FileDescriptor.h"
 #include <map>
@@ -9,7 +10,7 @@
 #include "was/blob.h"
 #include "ASConfig.h"
 
-class SinglePageBlobAdapter
+class SinglePageBlobAdapter : public virtual AbstractPageBlobAdapter
 {
 private:
   azure::storage::cloud_page_blob &blob;
