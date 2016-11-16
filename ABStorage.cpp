@@ -38,6 +38,7 @@ int main(int argc, char *argv[])
   CloudPageBlobBuilder cloudPageBlobBuilder;
   azure::storage::cloud_page_blob pageBlob = cloudPageBlobBuilder.build_cloud_page_blob(asConfig, filePath);
 
+  
   ASBlockDevice::asAdapter = new SinglePageBlobAdapter(pageBlob);
 
   uint64_t size = ASBlockDevice::asAdapter->getSize();

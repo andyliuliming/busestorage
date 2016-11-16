@@ -4,12 +4,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <vector>
+#include "was/storage_account.h"
+#include "was/blob.h"
+
 class Raid0PageBlobAdapter : public virtual AbstractPageBlobAdapter
 {
+  private:
+    std::vector<azure::storage::cloud_page_blob> &pageBlobs;
+    size_t sectionSize;
+
   public:
-    Raid0PageBlobAdapter(vector<azure::storage::cloud_page_blob> &pageBlobs)
+    Raid0PageBlobAdapter(std::vector<azure::storage::cloud_page_blob> &pageBlobs, size_t sectionSize) : pageBlobs(pageBlobs), sectionSize(sectionSize)
     {
-        //azure::storage::cloud_page_blob
     }
     inline uint64_t getSize()
     {

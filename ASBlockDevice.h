@@ -16,14 +16,14 @@
 #include <sys/xattr.h>
 #include "ASConfig.h"
 #include "ASFSEnv.h"
-#include "SinglePageBlobAdapter.h"
+#include "AbstractPageBlobAdapter.h"
 
 class ASBlockDevice
 {
 private:
 public:
   static ASFSEnv *asEnv;
-  static SinglePageBlobAdapter *asAdapter;
+  static AbstractPageBlobAdapter *asAdapter;
 
   static int xmpl_debug;
 

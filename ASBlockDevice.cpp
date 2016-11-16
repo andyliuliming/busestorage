@@ -6,5 +6,5 @@
 #include <unistd.h>
 #include <sys/types.h>
 ASFSEnv *ASBlockDevice::asEnv = NULL;
-SinglePageBlobAdapter *ASBlockDevice::asAdapter = NULL;
+AbstractPageBlobAdapter *ASBlockDevice::asAdapter = NULL;
 int ASBlockDevice::xmpl_debug = 1;
