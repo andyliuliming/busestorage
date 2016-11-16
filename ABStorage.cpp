@@ -3,6 +3,7 @@
 #include <string.h>
 #include <syslog.h>
 #include "SinglePageBlobAdapter.h"
+#include "Raid0PageBlobAdapter.h"
 #include "CloudPageBlobBuilder.h"
 #include "ASBlockDevice.h"
 #include "PathUtils.h"

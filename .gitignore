@@ -4,3 +4,4 @@ CMakeCache.txt
 .gitignore.swp
 CMakeFiles
 bin/busestorage
+bin/abstorage
