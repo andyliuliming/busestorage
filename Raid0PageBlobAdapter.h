@@ -28,7 +28,14 @@ class Raid0PageBlobAdapter : public virtual AbstractPageBlobAdapter
 
     inline uint64_t getSize()
     {
-        return -1;
+        uint64_t totalSize = 0;
+        for (int i = 0; i < pageBlobsLength; i++)
+        {
+            pageBlobs[i].download_attributes();
+            auto blobProp = pageBlobs[i].properties();
+            totalSize += blobProp.size();
+        }
+        return totalSize;
     }
 
     inline int read(char *buf, size_t size, off_t offset)
