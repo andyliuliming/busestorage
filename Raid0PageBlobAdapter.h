@@ -44,7 +44,7 @@ class Raid0PageBlobAdapter : public virtual AbstractPageBlobAdapter
         syslog(LOG_INFO, "R size %lu offset %lu\n", size, offset);
         concurrency::streams::container_buffer<std::vector<char>> containerBuffer;
         concurrency::streams::ostream output_stream(containerBuffer);
-        int sizeRemain = 0;
+        int sizeRemain = size;
         off_t curOffset = offset;
 
         while (sizeRemain > 0)
@@ -54,7 +54,8 @@ class Raid0PageBlobAdapter : public virtual AbstractPageBlobAdapter
 
             off_t offsetInner = curOffset % sectionSize;
             int stepReadSize = ((offsetInner + sizeRemain) > sectionSize) ? (sectionSize - offsetInner) : (sizeRemain);
-
+            syslog(LOG_INFO, "size %lu xDirectIndex %lu yDirectIndex %lu sizeRemain %lu offsetInner %lu stepReadSize %lu\n",
+                   size, xDirectIndex, yDirectIndex, sizeRemain, offsetInner, stepReadSize);
             pageBlobs[yDirectIndex].download_range_to_stream(output_stream, xDirectIndex * sectionSize + offsetInner, stepReadSize);
             curOffset += stepReadSize;
             sizeRemain -= stepReadSize;
@@ -69,7 +70,7 @@ class Raid0PageBlobAdapter : public virtual AbstractPageBlobAdapter
     inline int write(char *buf, size_t size, off_t offset)
     {
         syslog(LOG_INFO, "W size %lu offset %lu\n", size, offset);
-        int sizeRemain = 0;
+        int sizeRemain = size;
         off_t curOffset = offset;
 
         while (sizeRemain > 0)
