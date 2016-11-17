@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <syslog.h>
+#include <vector>
 #include "SinglePageBlobAdapter.h"
 #include "Raid0PageBlobAdapter.h"
 #include "CloudPageBlobBuilder.h"
@@ -39,11 +40,13 @@ int main(int argc, char *argv[])
   strcpy(disk2Path->fileName, "testdisk.vhd");
 
   CloudPageBlobBuilder cloudPageBlobBuilder;
+  std::vector<azure::storage::cloud_page_blob> pageBlobs;
   azure::storage::cloud_page_blob pageBlob1 = cloudPageBlobBuilder.build_cloud_page_blob(asConfig, disk1Path);
   azure::storage::cloud_page_blob pageBlob2 = cloudPageBlobBuilder.build_cloud_page_blob(asConfig, disk2Path);
-
-  ASBlockDevice::asAdapter = new SinglePageBlobAdapter(pageBlob1);
-
+  pageBlobs.push_back(pageBlob1);
+  pageBlobs.push_back(pageBlob2);
+  ASBlockDevice::asAdapter = new Raid0PageBlobAdapter(pageBlobs, 1024 * 1024);
+  //ASBlockDevice::asAdapter = new SinglePageBlobAdapter(pageBlob1);
   uint64_t size = ASBlockDevice::asAdapter->getSize();
 
   syslog(LOG_INFO, "page blob size is %lu\n", size);
