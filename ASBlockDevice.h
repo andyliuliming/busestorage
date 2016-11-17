@@ -28,10 +28,10 @@ public:
 
   static int xmp_read(void *buf, u_int32_t len, u_int64_t offset, void *userdata)
   {
-    if (*(int *)userdata)
-    {
-      fprintf(stderr, "R - %lu, %u\n", offset, len);
-    }
+    // if (*(int *)userdata)
+    // {
+    //   fprintf(stderr, "R - %lu, %u\n", offset, len);
+    // }
     asAdapter->read((char*)buf, len, offset);
 
     //memcpy(buf, (char *)data + offset, len);
@@ -40,10 +40,10 @@ public:
 
   static int xmp_write(const void *buf, u_int32_t len, u_int64_t offset, void *userdata)
   {
-    if (*(int *)userdata)
-    {
-      fprintf(stderr, "W - %lu, %u\n", offset, len);
-    }
+    // if (*(int *)userdata)
+    // {
+    //   fprintf(stderr, "W - %lu, %u\n", offset, len);
+    // }
     asAdapter->write((char*)buf, len, offset);
     //memcpy((char *)data + offset, buf, len);
     return 0;

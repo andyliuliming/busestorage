@@ -21,7 +21,8 @@ class Raid0PageBlobAdapter : public virtual AbstractPageBlobAdapter
     size_t sectionSize;
 
   public:
-    Raid0PageBlobAdapter(std::vector<azure::storage::cloud_page_blob> &pageBlobs, size_t sectionSize) : pageBlobs(pageBlobs), sectionSize(sectionSize)
+    Raid0PageBlobAdapter(std::vector<azure::storage::cloud_page_blob> &pageBlobs, size_t sectionSize)
+        : pageBlobs(pageBlobs), sectionSize(sectionSize)
     {
         this->pageBlobsLength = pageBlobs.size();
     }
@@ -40,6 +41,7 @@ class Raid0PageBlobAdapter : public virtual AbstractPageBlobAdapter
 
     inline int read(char *buf, size_t size, off_t offset)
     {
+        syslog(LOG_INFO, "R size %lu offset %lu\n", size, offset);
         concurrency::streams::container_buffer<std::vector<char>> containerBuffer;
         concurrency::streams::ostream output_stream(containerBuffer);
         int sizeRemain = 0;
@@ -54,6 +56,7 @@ class Raid0PageBlobAdapter : public virtual AbstractPageBlobAdapter
             int stepReadSize = ((offsetInner + sizeRemain) > sectionSize) ? (sectionSize - offsetInner) : (sizeRemain);
 
             pageBlobs[yDirectIndex].download_range_to_stream(output_stream, xDirectIndex * sectionSize + offsetInner, stepReadSize);
+            curOffset += stepReadSize;
             sizeRemain -= stepReadSize;
         }
         std::vector<char> collec = containerBuffer.collection();
@@ -65,6 +68,7 @@ class Raid0PageBlobAdapter : public virtual AbstractPageBlobAdapter
 
     inline int write(char *buf, size_t size, off_t offset)
     {
+        syslog(LOG_INFO, "W size %lu offset %lu\n", size, offset);
         int sizeRemain = 0;
         off_t curOffset = offset;
 
@@ -75,11 +79,12 @@ class Raid0PageBlobAdapter : public virtual AbstractPageBlobAdapter
 
             off_t offsetInner = curOffset % sectionSize;
             int stepWriteSize = ((offsetInner + sizeRemain) > sectionSize) ? (sectionSize - offsetInner) : (sizeRemain);
-
+            syslog(LOG_INFO, "size %lu xDirectIndex %lu yDirectIndex %lu sizeRemain %lu offsetInner %lu stepWriteSize %lu\n",
+                   size, xDirectIndex, yDirectIndex, sizeRemain, offsetInner, stepWriteSize);
             std::vector<uint8_t> uploadBuffer(buf + (size - sizeRemain), buf + (size - sizeRemain) + stepWriteSize);
             auto stream = concurrency::streams::bytestream::open_istream(uploadBuffer);
             pageBlobs[yDirectIndex].upload_pages(stream, xDirectIndex * sectionSize + offsetInner, utility::string_t());
-
+            curOffset += stepWriteSize;
             sizeRemain -= stepWriteSize;
         }
 

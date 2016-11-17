@@ -29,8 +29,6 @@ public:
 
   inline int read(char *buf, size_t size, off_t offset)
   {
-    //TODO: cache the container in memory.
-
     //TODO download the stream without copying data
     concurrency::streams::container_buffer<std::vector<char>> containerBuffer;
     concurrency::streams::ostream output_stream(containerBuffer);

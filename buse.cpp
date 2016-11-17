@@ -179,7 +179,7 @@ int buse_main(const char *dev_file, const struct buse_operations *aop, void *use
        * and writes.
        */
     case NBD_CMD_READ:
-      fprintf(stderr, "Request for read of size %d\n", len);
+      //fprintf(stderr, "Request for read of size %d\n", len);
       /* Fill with zero in case actual read is not implemented */
       chunk = malloc(len);
       reply.error = aop->read(chunk, len, from, userdata);
@@ -188,7 +188,7 @@ int buse_main(const char *dev_file, const struct buse_operations *aop, void *use
       free(chunk);
       break;
     case NBD_CMD_WRITE:
-      fprintf(stderr, "Request for write of size %d\n", len);
+      //fprintf(stderr, "Request for write of size %d\n", len);
       chunk = malloc(len);
       read_all(sk, (char *)chunk, len);      
       reply.error = aop->write(chunk, len, from, userdata);      

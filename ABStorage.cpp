@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
   azure::storage::cloud_page_blob pageBlob2 = cloudPageBlobBuilder.build_cloud_page_blob(asConfig, disk2Path);
   pageBlobs.push_back(pageBlob1);
   pageBlobs.push_back(pageBlob2);
-  ASBlockDevice::asAdapter = new Raid0PageBlobAdapter(pageBlobs, 1024 * 1024);
+  ASBlockDevice::asAdapter = new Raid0PageBlobAdapter(pageBlobs, 1024 * 1024 * 1024);
   //ASBlockDevice::asAdapter = new SinglePageBlobAdapter(pageBlob1);
   uint64_t size = ASBlockDevice::asAdapter->getSize();
 
